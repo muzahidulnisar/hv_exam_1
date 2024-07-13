@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  auth-service:
+    container_name: auth-service
+    restart: always
+    build:
+      context: ./backend/authService
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./backend/authService/.env
+    depends_on:
+      - mongo
+
+  streaming-service:
+    container_name: streaming-service
+    restart: always
+    build:
+      context: ./backend/streamingService
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    #depends_on:
+    #  - auth-service
+
+  frontend:
+    container_name: frontend
+    restart: always
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    #depends_on:
+    #  - auth-service
+    #  - streaming-service
+
+volumes:
+  mongo-data:
