@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  wordpress:
+    image: wordpress:latest
+    restart: always
+    container_name: wordpress
+    ports:
+      - "8080:80"
+    volumes:
+      - wordpress_volume:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: mongo
+      #WORDPRESS_DB_USER: ""
+      #WORDPRESS_DB_PASSWORD: ""
+      WORDPRESS_DB_NAME:  wordpressDB
+
+
+  mongodb:
+    image: mongo:latest
+    restart: always
+    container_name: mongoDB
+    volumes:
+      - /home/ubuntu/mongo_db_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: Mmongo
+      MONGO_INITDB_ROOT_PASSWORD: Mmongo@DB
+      MONGO_INITDB_DATABASE: wordpress
+
+volumes:
+  wordpress_volume:
