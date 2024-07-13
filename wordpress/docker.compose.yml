@@ -22,10 +22,10 @@ services:
     container_name: mongoDB
     volumes:
       - /home/ubuntu/mongo_db_data:/data/db
-    #environment:
+    environment:
       #MONGO_INITDB_ROOT_USERNAME: Mmongo
       #MONGO_INITDB_ROOT_PASSWORD: Mmongo@DB
-      #MONGO_INITDB_DATABASE: wordpress
+      MONGO_INITDB_DATABASE: wordpressDB
 
 volumes:
   wordpress_volume:
